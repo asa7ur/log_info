@@ -21,18 +21,22 @@ with open("syslog.log") as file:
 
             username = error_match.group(2)
             if username not in per_user:
-                per_user[username] = [0, 0]
-            per_user[username][1] += 1
+                per_user[username] = {'INFO': 0, 'ERROR': 0}
+            per_user[username]['ERROR'] += 1
 
         if info_match:
             username = info_match.group(2)
-
             if username not in per_user:
-                per_user[username] = [0, 0]
-            per_user[username][0] += 1
+                per_user[username] = {'INFO': 0, 'ERROR': 0}
+            per_user[username]['INFO'] += 1
 
 sorted_errors = [("Error", "Count")] + sorted(error.items(), key=operator.itemgetter(1), reverse=True)
-sorted_users = [("Username", "INFO", "ERROR")] + sorted(per_user.items(), key=operator.itemgetter(0))
+
+sorted_users = [("Username", "INFO", "ERROR")]
+for username, amounts in sorted(per_user.items(), key=operator.itemgetter(0)):
+    info_amount = amounts['INFO']
+    error_amount = amounts['ERROR']
+    sorted_users.append((username, info_amount, error_amount))
 
 with open('error_message.csv', 'w', newline='') as error_file:
     writer = csv.writer(error_file)
