@@ -15,9 +15,11 @@ with open("syslog.log") as file:
 
         if error_match:
             error_msg = error_match.group(1)
-            error[error_msg] = error.get(error_msg, 0) + 1
-            username = error_match.group(2)
+            if error_msg not in error:
+                error[error_msg] = 0
+            error[error_msg] += 1
 
+            username = error_match.group(2)
             if username not in per_user:
                 per_user[username] = [0, 0]
             per_user[username][1] += 1
