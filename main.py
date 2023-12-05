@@ -32,11 +32,9 @@ with open("syslog.log") as file:
 
 sorted_errors = [("Error", "Count")] + sorted(error.items(), key=operator.itemgetter(1), reverse=True)
 
-sorted_users = [("Username", "INFO", "ERROR")]
-for username, amounts in sorted(per_user.items(), key=operator.itemgetter(0)):
-    info_amount = amounts['INFO']
-    error_amount = amounts['ERROR']
-    sorted_users.append((username, info_amount, error_amount))
+sorted_users = [("Username", "INFO", "ERROR")] + sorted(
+    ((username, amounts['INFO'], amounts['ERROR']) for username, amounts in per_user.items()),
+    key=operator.itemgetter(0))
 
 with open('error_message.csv', 'w', newline='') as error_file:
     writer = csv.writer(error_file)
