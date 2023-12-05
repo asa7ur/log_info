@@ -1,8 +1,8 @@
 An automation script that will process the system log and generate reports based on the information extracted from the log files. 
 We'll be working with a log file named syslog.log.
 The log lines follow a pattern similar to these:
-1. Jan 31 00:16:25 ubuntu.local ticky: INFO Closed ticket [#1754] (noel)
-2. Jan 31 00:21:30 ubuntu.local ticky: ERROR The ticket was modified while updating (breee)
+Jan 31 00:16:25 ubuntu.local ticky: INFO Closed ticket [#1754] (noel)
+Jan 31 00:21:30 ubuntu.local ticky: ERROR The ticket was modified while updating (breee)
 When the service runs correctly, it logs an INFO message to syslog. It then states what it did and states the username and ticket number related to the event. 
 If the service encounters a problem, it logs an ERROR message to syslog. This error message indicates what was wrong and states the username that triggered the action that caused the problem.
 This script will create the following reports:
