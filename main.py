@@ -1,5 +1,4 @@
 import re
-import operator
 import csv
 
 error = {}
@@ -30,11 +29,11 @@ with open("syslog.log") as file:
                 per_user[username] = {'INFO': 0, 'ERROR': 0}
             per_user[username]['INFO'] += 1
 
-sorted_errors = [("Error", "Count")] + sorted(error.items(), key=operator.itemgetter(1), reverse=True)
+sorted_errors = [("Error", "Count")] + sorted(error.items(), key=lambda x: x[1], reverse=True)
 
 sorted_users = [("Username", "INFO", "ERROR")] + sorted(
     ((username, amounts['INFO'], amounts['ERROR']) for username, amounts in per_user.items()),
-    key=operator.itemgetter(0))
+    key=lambda x: x[0])
 
 with open('error_message.csv', 'w', newline='') as error_file:
     writer = csv.writer(error_file)
